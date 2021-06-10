@@ -1,2 +1,2 @@
-# python-package-template
-Directory structure and setup files for standard simple python package. As per https://packaging.python.org/tutorials/packaging-projects/
+# Oanda Base Package
+Uses the REST v20 API to access your Oanda account, send orders and recieve data.
