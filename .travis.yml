@@ -1,6 +1,6 @@
 language: python
 python: 
-- "3.7.9"
+- "3.7"
 install:  
 - pip install -e .
 # Install packages for code coverage report
