@@ -1,14 +1,16 @@
 language: python
 python: 
-- "3.7.4"
+- "3.7.9"
 install:  
 - pip install -e .
 # Install packages for code coverage report
 - pip install pytest-cov codecov    
+- pip install flake8
 - pip install -r requirements.txt
 script:  
 # Point to the source directory
-- pytest --cov=oanda_v20_platform tests
+- pytest --cov=oanda-base tests
+- flake8 . --exit-zero # Exit with status code "0" even if there are errors.
 after_success:  
 # uploads report to codecov.io
 - codecov                           
