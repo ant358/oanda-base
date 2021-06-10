@@ -9,8 +9,8 @@ install:
 - pip install -r requirements.txt
 script:  
 # Point to the source directory
-- pytest --cov=oanda-base tests
+- pytest --cov=oandabase tests
 - flake8 . --exit-zero # Exit with status code "0" even if there are errors.
 after_success:  
-# uploads report to codecov.io
-- codecov                           
+# uploads report to codecov.io                   
+- bash <(curl -s https://codecov.io/bash)    
