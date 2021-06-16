@@ -3,6 +3,23 @@ import requests
 import json
 from decouple import config
 import logging
+# create logger
+logger = logging.getLogger()
+# set minimum output level
+logger.setLevel(logging.DEBUG)
+
+# create console handler and set level to debug
+ch = logging.StreamHandler()
+# set minimum output level
+ch.setLevel(logging.INFO)
+# create formatter
+formatter = logging.Formatter('[%(levelname)s] -'
+                              ' %(asctime)s - '
+                              '%(name)s : %(message)s')
+# add formatter
+ch.setFormatter(formatter)
+# add a handler to logger
+logger.addHandler(ch)
 
 
 class Base(object):
@@ -149,6 +166,7 @@ class Order(Account):
                                   " failed to get any data")
 
     def find_matching_trades(self):
+        # TODO add args instrument
         new_list = []
         for item in self.open_trades['trades']:
             if item['instrument'] == self.pair:
