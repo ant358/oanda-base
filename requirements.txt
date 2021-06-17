@@ -1,10 +1,2 @@
-ipykernel
-numpy
-packaging
-pandas
-psutil
-pytest
 python-decouple
 requests
-SQLAlchemy
-urllib3

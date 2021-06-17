@@ -335,7 +335,7 @@ class DataFeed(Order):
         except Exception:
             self.logger.exception('Failed to connect to stream')
 
-    def stream(self):
+    def stream(self, console_output=True):
         """Handles the full stream json e.g.
             {"type":"PRICE",
             "time":"2021-05-13T22:00:43.020656828Z",
@@ -351,6 +351,8 @@ class DataFeed(Order):
         if response.status_code != 200:
             self.logger.debug("Bid stream bad response status {}"
                               .format(response.status))
+        else:
+            self.logger.debug("Stream connected OK")
         lines = response.iter_lines()
         next(lines)
         for line in lines:
@@ -358,10 +360,11 @@ class DataFeed(Order):
             msg = json.loads(line)
 
             if "instrument" in msg or "tick" in msg:
-                # print('\n' + line)
                 self.full_stream = msg
+                if console_output:
+                    print('\n' + line)
 
-    def bid_stream(self):
+    def bid_stream(self, console_output=True):
         """Extracts the current bid price from the connected stream
         Updates instance.bid as a float value, which can then be used by
         trading bots to monitor price
@@ -373,19 +376,17 @@ class DataFeed(Order):
                               .format(response.status))
 
         lines = response.iter_lines()
-        # Save the first line for later or just skip it
+
         next(lines)
-        last_bid = 0
         for line in lines:
             line = line.decode('utf-8')
             msg = json.loads(line)
             if 'bids' in msg:
                 self.bid = float(msg['bids'][0]['price'])
-                if self.bid != last_bid:
+                if console_output:
                     print(self.bid)
-                last_bid = self.bid
 
-    def ask_stream(self):
+    def ask_stream(self, console_output=True):
         """Extracts the current ask price from the connected stream
         Updates instance.ask as a float value, which can then be used by
         trading bots to monitor price
@@ -397,15 +398,13 @@ class DataFeed(Order):
                               .format(response.status))
         lines = response.iter_lines()
         next(lines)
-        last_ask = 0
         for line in lines:
             line = line.decode('utf-8')
             msg = json.loads(line)
             if 'asks' in msg:
                 self.ask = float(msg['asks'][0]['price'])
-                if self.ask != last_ask:
+                if console_output:
                     print(self.ask)
-                last_ask = self.ask
 
 
 if __name__ == "__main__":
