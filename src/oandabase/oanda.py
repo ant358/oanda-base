@@ -22,14 +22,7 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
-class Base(object):
-    """Base class to access account, and facilitate inheritance of the subclasses
-    """
-    # TODO test if this base class is still required?
-    def __init__(self, **kwargs): pass
-
-
-class Oanda(Base):
+class Oanda(object):
     """Sets up access to an Oanda account and the market data stream for the chosen
      asset e.g. currency pair or commodity.
 
@@ -66,12 +59,6 @@ class Oanda(Base):
 
     def set_headers(self):
         return {'Authorization': 'Bearer ' + self.token}
-
-    def print_details(self):
-        print(f'Token: {self.token}')
-        print(f'Account Number: {self.account}')
-        print(f'Base Url: {self.base_url}')
-        print(f'Headers: {self.headers}')
 
 
 class Account(Oanda):
@@ -364,17 +351,15 @@ class DataFeed(Order):
         if response.status_code != 200:
             self.logger.debug("Bid stream bad response status {}"
                               .format(response.status))
-        for line in response.iter_lines():
-            if line:
-                try:
-                    line = line.decode('utf-8')
-                    msg = json.loads(line)
-                except Exception:
-                    self.logger.exception('Stream Failed')
+        lines = response.iter_lines()
+        next(lines)
+        for line in lines:
+            line = line.decode('utf-8')
+            msg = json.loads(line)
 
-                if "instrument" in msg or "tick" in msg:
-                    # print('\n' + line)
-                    self.full_stream = msg
+            if "instrument" in msg or "tick" in msg:
+                # print('\n' + line)
+                self.full_stream = msg
 
     def bid_stream(self):
         """Extracts the current bid price from the connected stream
@@ -410,19 +395,19 @@ class DataFeed(Order):
         if response.status_code != 200:
             self.logger.debug("Bid stream bad response status {}"
                               .format(response.status))
-        for line in response.iter_lines():
-            if line:
-                try:
-                    line = line.decode('utf-8')
-                    msg = json.loads(line)
-
-                except Exception:
-                    self.logger.exception('Stream Failed')
-
-                if 'asks' in msg:
-                    self.ask = float(msg['asks'][0]['price'])
+        lines = response.iter_lines()
+        next(lines)
+        last_ask = 0
+        for line in lines:
+            line = line.decode('utf-8')
+            msg = json.loads(line)
+            if 'asks' in msg:
+                self.ask = float(msg['asks'][0]['price'])
+                if self.ask != last_ask:
+                    print(self.ask)
+                last_ask = self.ask
 
 
 if __name__ == "__main__":
 
-    test = DataFeed()
+    feed = DataFeed()
