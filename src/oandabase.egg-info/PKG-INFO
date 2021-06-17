@@ -1,3 +1,20 @@
+Metadata-Version: 2.1
+Name: oandabase
+Version: 0.1.0
+Summary: Oanda account connection, order sending and data feed
+Home-page: https://github.com/ant358/oanda-base/
+Author: Anthony Wynne
+Author-email: 12174019+ant358@users.noreply.github.com
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/ant358/oanda-base/issues
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
 [![Build Status](https://travis-ci.com/ant358/oanda-base.svg?branch=main)](https://travis-ci.com/ant358/oanda-base)
 [![codecov](https://codecov.io/gh/ant358/oanda-base/branch/main/graph/badge.svg?token=AYQZW7TNAN)](https://codecov.io/gh/ant358/oanda-base)
 # Oanda Base Package
@@ -19,3 +36,4 @@ PRACTICE_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ## Usage:  
 Built to be a component of other systems. 
 Read through the classes and they should explain themselves.  
+

@@ -1,0 +1,13 @@
+LICENSE
+MANIFEST.in
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+src/oandabase/__init__.py
+src/oandabase/oanda.py
+src/oandabase.egg-info/PKG-INFO
+src/oandabase.egg-info/SOURCES.txt
+src/oandabase.egg-info/dependency_links.txt
+src/oandabase.egg-info/requires.txt
+src/oandabase.egg-info/top_level.txt
